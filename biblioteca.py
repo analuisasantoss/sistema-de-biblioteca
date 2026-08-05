@@ -10,7 +10,7 @@ while True:
     print("7 - Sair")
     opcao = input("Escolha uma opção: ")
     if opcao == "1":
-    #Cadastro de livros
+        # Cadastro de livros
         print("CADASTRAR LIVRO")
         titulo = input("Título: ")
         autor = input("Autor: ")
@@ -26,10 +26,10 @@ while True:
         }
         livros.append(livro)
         arquivo = open("livros.csv", "a", encoding="utf-8")
-        arquivo.write(titulo + "," + autor + "," + ano + "," + isbn + "," + status)
-        arquivo.write("\n")
+        arquivo.write(titulo + "," + autor + "," + ano + "," + isbn + "," + status + "\n")
         arquivo.close()
         print("Livro cadastrado com sucesso!")
+        print("Arquivo salvo!")
     elif opcao == "2":
         print("REGISTRAR EMPRÉSTIMO")
     elif opcao == "3":
