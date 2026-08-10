@@ -2,15 +2,18 @@ livros = []
 # Recupera os livros salvos no arquivo quando o programa inicia
 arquivo = open("livros.csv", "r", encoding="utf-8")
 for linha in arquivo:
-    dados = linha.split(",")
-    livro = {
-        "titulo": dados[0],
-        "autor": dados[1],
-        "ano": dados[2],
-        "isbn": dados[3],
-        "status": dados[4].replace("\n", "")
-    }
-    livros.append(livro)
+    # Vai ignorar linhas vazias
+    if linha.strip():
+        dados = linha.strip().split(",")
+        if len(dados) >= 5:
+            livro = {
+                "titulo": dados[0],
+                "autor": dados[1],
+                "ano": dados[2],
+                "isbn": dados[3],
+                "status": dados[4]
+            }
+            livros.append(livro)
 arquivo.close()
 # Salva os livros no arquivo para manter os dados guardados
 def salvar_arquivo():
@@ -24,7 +27,7 @@ def salvar_arquivo():
             livro["status"] + "\n"
         )
     arquivo.close()
-    # Cadastro de livros 
+# Cadastro de livros
 def cadastrar_livro():
     print("cadastrar livro")
     titulo = input("Título: ")
@@ -41,11 +44,30 @@ def cadastrar_livro():
     }
     livros.append(livro)
     salvar_arquivo()
-    return "Livro cadastrado!"
- # Listar todos os livros cadastrados mostrando seus dados e status
-def listar_livros():
-    print("listar livros")
+    return "Livro cadastrado"
+# Registro de empréstimo de um livro alterando o status
+def emprestar_livro():
+    isbn = input("Digite o ISBN: ")
     for livro in livros:
+        if livro["isbn"] == isbn:
+            livro["status"] = "emprestado"
+            salvar_arquivo()
+            return "Empréstimo realizado"
+    return "Livro não encontrado"
+# Registro de devolução de livros
+def devolver_livro():
+    isbn = input("Digite o ISBN: ")
+    for livro in livros:
+        if livro["isbn"] == isbn:
+            livro["status"] = "disponível"
+            salvar_arquivo()
+            return "Devolução realizada"
+    return "Livro não encontrado"
+# Listar todos os livros cadastrados
+def listar_livros():
+    print("listar livro")
+    for livro in livros:
+        print("----------------")
         print("Título:", livro["titulo"])
         print("Autor:", livro["autor"])
         print("Ano:", livro["ano"])
@@ -54,10 +76,10 @@ def listar_livros():
     return "Lista finalizada"
 # Buscar um livro pelo título ou pelo autor
 def buscar_livro():
-    print("buscar livro")
+    print("BUSCAR LIVRO")
     busca = input("Digite o título ou autor: ")
     for livro in livros:
-        if busca == livro["titulo"] or busca == livro["autor"]:
+        if busca.lower() == livro["titulo"].lower() or busca.lower() == livro["autor"].lower():
             print("Título:", livro["titulo"])
             print("Autor:", livro["autor"])
             print("Ano:", livro["ano"])
@@ -65,9 +87,36 @@ def buscar_livro():
             print("Status:", livro["status"])
             return "Livro encontrado"
     return "Livro não encontrado"
- # Menu principal que mantém o sistema funcionando até o usuário escolher sair
+# Ordenar a listagem de livros por título, autor ou ano de publicação
+def ordenar_livros():
+    print("ordenar livros")
+    print("1 - Ordenar por título")
+    print("2 - Ordenar por autor")
+    print("3 - Ordenar por ano")
+    escolha = input("Escolha uma opção: ")
+    for i in range(len(livros)):
+        for j in range(i + 1, len(livros)):
+            if escolha == "1":
+                if livros[i]["titulo"].lower() > livros[j]["titulo"].lower():
+                    troca = livros[i]
+                    livros[i] = livros[j]
+                    livros[j] = troca
+            elif escolha == "2":
+                if livros[i]["autor"].lower() > livros[j]["autor"].lower():
+                    troca = livros[i]
+                    livros[i] = livros[j]
+                    livros[j] = troca
+            elif escolha == "3":
+                if int(livros[i]["ano"]) > int(livros[j]["ano"]):
+                    troca = livros[i]
+                    livros[i] = livros[j]
+                    livros[j] = troca
+            else:
+                return "Opção inválida"
+    salvar_arquivo()
+    return "Livros ordenados com sucesso"
+# Menu principal que mantém o sistema funcionando
 while True:
- 
     print("\nSISTEMA DA BIBLIOTECA")
     print("1 - Cadastrar livros")
     print("2 - Registrar empréstimo")
@@ -76,15 +125,21 @@ while True:
     print("5 - Buscar livro")
     print("6 - Ordenar livros")
     print("7 - Sair")
- 
- 
     opcao = input("Escolha uma opção: ")
- 
- 
     if opcao == "1":
- 
         print(cadastrar_livro())
- 
- 
-    
-    
+    elif opcao == "2":
+        print(emprestar_livro())
+    elif opcao == "3":
+        print(devolver_livro())
+    elif opcao == "4":
+        print(listar_livros())
+    elif opcao == "5":
+        print(buscar_livro())
+    elif opcao == "6":
+        print(ordenar_livros())
+    elif opcao == "7":
+        print("Sistema encerrado")
+        break
+    else:
+        print("Opção inválida")
