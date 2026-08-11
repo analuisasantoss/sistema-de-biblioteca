@@ -129,35 +129,16 @@ def buscar_livro(livros):
  
 def ordenar_livros(livros):
     print("ordenar livros")
-    print("1 - Ordenar por título")
-    print("2 - Ordenar por autor")
-    print("3 - Ordenar por ano")
+    criterio = input("Ordenar por (título, autor, ano): ")
  
-    escolha = input("Escolha uma opção: ")
- 
-    for i in range(len(livros)):
-        for j in range(i + 1, len(livros)):
- 
-            if escolha == "1":
-                if livros[i]["titulo"].lower() > livros[j]["titulo"].lower():
-                    troca = livros[i]
-                    livros[i] = livros[j]
-                    livros[j] = troca
- 
-            elif escolha == "2":
-                if livros[i]["autor"].lower() > livros[j]["autor"].lower():
-                    troca = livros[i]
-                    livros[i] = livros[j]
-                    livros[j] = troca
- 
-            elif escolha == "3":
-                if int(livros[i]["ano"]) > int(livros[j]["ano"]):
-                    troca = livros[i]
-                    livros[i] = livros[j]
-                    livros[j] = troca
- 
-            else:
-                return "Opção inválida"
+    if criterio == "título":
+        livros.sort(key=lambda x: x["titulo"])
+    elif criterio == "autor":
+        livros.sort(key=lambda x: x["autor"])
+    elif criterio == "ano":
+        livros.sort(key=lambda x: x["ano"])
+    else:
+        return "livro inválido"
  
     salvar_arquivo()
  
