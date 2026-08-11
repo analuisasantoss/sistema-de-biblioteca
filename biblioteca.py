@@ -105,34 +105,41 @@ def listar_livros(livros):
     return "Lista finalizada"
  
  
-# Busca um livro pelo título ou pelo autor
+# Busca um livro pelo título ou pelo autor 
 def buscar_livro(livros):
-    print("buscar livros")
-    busca = input("Digite o título ou autor: ").lower()
+    print("buscar livro")
+    termo = input("Digite o título ou autor: ")
+ 
     for livro in livros:
-        titulo = livro["titulo"].lower()
-        autor = livro["autor"].lower()
-        if busca in titulo or busca in autor:
+        if termo.lower() in livro["titulo"].lower() or termo.lower() in livro["autor"].lower():
             print("Título:", livro["titulo"])
             print("Autor:", livro["autor"])
             print("Ano:", livro["ano"])
             print("ISBN:", livro["isbn"])
             print("Status:", livro["status"])
-            return "Livro encontrado"
-    return "Livro não encontrado"
  
+    return "Busca finalizada"
  
 # Ordena a listagem de livros por título, autor ou ano de publicação
  
 def ordenar_livros(livros):
-def ordenar_livros(livros): 
- print("1 - Ordenar por título") 
- print("2 - Ordenar por autor")
- print("3 - Ordenar por ano") opcao = input("Escolha: ") if opcao == "1": livros.sort(key=lambda livro: livro["titulo"]) elif opcao == "2": livros.sort(key=lambda livro: livro["autor"]) elif opcao == "3": livros.sort(key=lambda livro: livro["ano"]) 
-        else: print("Opção inválida") 
-return livros salvar_arquivo()
-return livros
- 
+    print("1 - Ordenar por título")
+    print("2 - Ordenar por autor")
+    print("3 - Ordenar por ano")
+    opcao = input("Escolha: ")
+    if opcao == "1":
+        livros.sort(key=lambda livro: livro["titulo"])
+    elif opcao == "2":
+        livros.sort(key=lambda livro: livro["autor"])
+    elif opcao == "3":
+        livros.sort(key=lambda livro: livro["ano"])
+    else:
+        print("Opção inválida")
+        return livros
+    salvar_arquivo()
+    return livros
+
+
 # Menu principal que mantém o sistema funcionando
  
 while True:
