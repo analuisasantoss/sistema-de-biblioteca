@@ -1,11 +1,11 @@
 livros = []
  
-# Recupera os livros salvos no arquivo quando o programa inicia
+# Recupera os livros salvos no arquivo 
  
 arquivo = open("livros.csv", "r", encoding="utf-8")
  
 for linha in arquivo:
-    # Vai ignorar linhas vazias e o cabeçalho
+# Vai ignorar linhas vazias e o cabeçalho
  dados = linha.strip().split(",")
 
 if len(dados) >= 5 and dados[0] != "titulo":
@@ -26,7 +26,7 @@ arquivo.close()
  
 def salvar_arquivo():
     arquivo = open("livros.csv", "w", encoding="utf-8")
- 
+
     for livro in livros:
         arquivo.write(
             livro["titulo"] + "," +
@@ -35,9 +35,8 @@ def salvar_arquivo():
             livro["isbn"] + "," +
             livro["status"] + "\n"
         )
- 
+
     arquivo.close()
- 
  
 # Cadastro de livros
  
@@ -63,17 +62,17 @@ def cadastrar_livro():
     return "Livro cadastrado"
  
  
-# Registro de empréstimo de um livro alterando o status
+# Registro de empréstimo de livros
  
 def emprestar_livro():
     isbn = input("Digite o ISBN: ")
- 
     for livro in livros:
         if livro["isbn"] == isbn:
+            if livro["status"] == "emprestado":
+                return "Livro já está emprestado"
             livro["status"] = "emprestado"
             salvar_arquivo()
             return "Empréstimo realizado"
- 
     return "Livro não encontrado"
  
  
@@ -81,13 +80,13 @@ def emprestar_livro():
  
 def devolver_livro():
     isbn = input("Digite o ISBN: ")
- 
     for livro in livros:
         if livro["isbn"] == isbn:
+            if livro["status"] == "disponível":
+                return "Livro já está disponível"
             livro["status"] = "disponível"
             salvar_arquivo()
             return "Devolução realizada"
- 
     return "Livro não encontrado"
  
  
@@ -106,46 +105,33 @@ def listar_livros(livros):
     return "Lista finalizada"
  
  
-# Buscar um livro pelo título ou pelo autor
- 
+# Busca um livro pelo título ou pelo autor
 def buscar_livro(livros):
     print("buscar livros")
-    busca = input("Digite o título ou autor: ")
- 
+    busca = input("Digite o título ou autor: ").lower()
     for livro in livros:
-        if busca.lower() == livro["titulo"].lower() or busca.lower() == livro["autor"].lower():
+        titulo = livro["titulo"].lower()
+        autor = livro["autor"].lower()
+        if busca in titulo or busca in autor:
             print("Título:", livro["titulo"])
             print("Autor:", livro["autor"])
             print("Ano:", livro["ano"])
             print("ISBN:", livro["isbn"])
             print("Status:", livro["status"])
- 
             return "Livro encontrado"
- 
     return "Livro não encontrado"
  
  
-# Ordenar a listagem de livros por título, autor ou ano de publicação
+# Ordena a listagem de livros por título, autor ou ano de publicação
  
 def ordenar_livros(livros):
-    print("1 - Ordenar por título")
-    print("2 - Ordenar por autor")
-    print("3 - Ordenar por ano")
-    opcao = input("Escolha: ")
-    if opcao == "1":
-        livros.sort(key=lambda livro: livro["titulo"])
-    elif opcao == "2":
-        livros.sort(key=lambda livro: livro["autor"])
-    elif opcao == "3":
-        livros.sort(key=lambda livro: livro["ano"])
-    else:
-        print("Opção inválida")
-    return livros
- 
-    salvar_arquivo()
- 
-    return "Livros ordenados com sucesso"
- 
+def ordenar_livros(livros): 
+ print("1 - Ordenar por título") 
+ print("2 - Ordenar por autor")
+ print("3 - Ordenar por ano") opcao = input("Escolha: ") if opcao == "1": livros.sort(key=lambda livro: livro["titulo"]) elif opcao == "2": livros.sort(key=lambda livro: livro["autor"]) elif opcao == "3": livros.sort(key=lambda livro: livro["ano"]) 
+        else: print("Opção inválida") 
+return livros salvar_arquivo()
+return livros
  
 # Menu principal que mantém o sistema funcionando
  
@@ -177,7 +163,9 @@ while True:
         print(buscar_livro(livros))
  
     elif opcao == "6":
-        print(ordenar_livros(livros))
+      ordenar_livros(livros)
+      print("Livros ordenados com sucesso")
+    
  
     elif opcao == "7":
         print("Sistema encerrado")
