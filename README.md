@@ -30,6 +30,6 @@ SISTEMA DA BIBLIOTECA
 5 - Buscar livro
 6 - Ordenar livros
 7 - Sair
-O usuário deve escolher uma das opções para realizar a operação desejada.
+O usuário deve escolher uma das opções para realizar a operação desejada..
 
 
