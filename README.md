@@ -13,7 +13,7 @@ O sistema ajuda a cadastrar, listar, buscar, emprestar e devolver livros, além 
 * Ordenar por título, autor ou ano
 * Salvar e carregar os dados dos livros
 
-## Tecnologias utilizadas
+## Tecnologias utilizadass
 
 * Python
 * Git e GitHub
@@ -30,6 +30,6 @@ SISTEMA DA BIBLIOTECA
 5 - Buscar livro
 6 - Ordenar livros
 7 - Sair
-O usuário deve escolher uma das opções para realizar a operação desejada..
+O usuário deve escolher uma das opções para realizar a operação desejada
 
 

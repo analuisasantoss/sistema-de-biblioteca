@@ -1,6 +1,5 @@
 livros = []
 # Recupera os livros salvos no arquivo
- 
 arquivo = open("livros.csv", "r", encoding="utf-8")
 for linha in arquivo:
 # verifica e ignora linhas vazias e o cabeçalho
