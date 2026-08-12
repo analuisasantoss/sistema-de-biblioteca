@@ -95,7 +95,7 @@ def listar_livros(livros):
     return "Lista finalizada"
  
 # Busca um livro pelo título ou pelo autor 
-## O lower deixa tudo em letras minúsculas para ajudar na comparação
+# O lower deixa tudo em letras minúsculas para ajudar na comparação
 def buscar_livro(livros):
     print("buscar livro")
     termo = input("Digite o título ou autor: ")
@@ -113,10 +113,10 @@ def buscar_livro(livros):
 
     return "Busca finalizada"
  
-# Ordena a listagem de livros por título, autor ou ano de publicação
-# O sort organiza os livros de acordo com a opção escolhida pelo usuario
-# O key mostra qual informação será usada para organizar
-# O lambda é uma opção mais rapida de pegar uma informação de cada livro
+# Ordenação da listagem de livros por título, autor ou ano de publicação
+# O sort organiza os livros de acordo com a opção 
+# O key vai definir qual informação será usada para organizar
+# O lambda é utilizado por ser uma opção mais rapida de pegar uma informação de cada livro
 def ordenar_livros(livros):
     print("1 - Ordenar por título")
     print("2 - Ordenar por autor")
