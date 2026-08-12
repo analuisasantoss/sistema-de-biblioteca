@@ -114,9 +114,9 @@ def buscar_livro(livros):
     return "Busca finalizada"
  
 # Ordenação da listagem de livros por título, autor ou ano de publicação
-# O sort organiza os livros de acordo com a opção 
-# O key vai definir qual informação será usada para organizar
-# O lambda é utilizado por ser uma opção mais rapida de pegar uma informação de cada livro
+# sort organiza os livros de acordo com a opção 
+# key vai definir qual informação será usada para organizar
+# lambda é utilizado por ser uma opção mais rapida de pegar uma informação de cada livro
 def ordenar_livros(livros):
     print("1 - Ordenar por título")
     print("2 - Ordenar por autor")
