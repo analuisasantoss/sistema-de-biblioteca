@@ -3,7 +3,7 @@ livros = []
  
 arquivo = open("livros.csv", "r", encoding="utf-8")
 for linha in arquivo:
-# Vai ignorar linhas vazias e o cabeçalho
+# verifica e ignora linhas vazias e o cabeçalho
  dados = linha.strip().split(",")
 if len(dados) >= 5 and dados[0] != "titulo":
     livro = {
@@ -33,17 +33,18 @@ def salvar_arquivo():
         )
 
     arquivo.close()
-# Cadastro de livros
- 
+
+# Cadastro de livros 
 def cadastrar_livro():
     print("cadastrar livros")
     titulo = input("Título: ")
     autor = input("Autor: ")
     ano = input("Ano de publicação: ")
     isbn = input("Código/ISBN: ")
+
     for livro in livros:
         if livro["isbn"] == isbn:
-            return "Já existe um livro cadastrado com esse ISBN."
+            return "Já tem um livro cadastrado com esse ISBN"
     status = "disponível"
     livro = {
         "titulo": titulo,
@@ -52,6 +53,7 @@ def cadastrar_livro():
         "isbn": isbn,
         "status": status
     }
+
     livros.append(livro)
     salvar_arquivo()
     return "Livro cadastrado"
