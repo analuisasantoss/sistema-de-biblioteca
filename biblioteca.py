@@ -1,13 +1,10 @@
 livros = []
- 
-# Recupera os livros salvos no arquivo 
+# Recupera os livros salvos no arquivo
  
 arquivo = open("livros.csv", "r", encoding="utf-8")
- 
 for linha in arquivo:
 # Vai ignorar linhas vazias e o cabeçalho
  dados = linha.strip().split(",")
-
 if len(dados) >= 5 and dados[0] != "titulo":
     livro = {
         "titulo": dados[0],
@@ -20,12 +17,11 @@ if len(dados) >= 5 and dados[0] != "titulo":
     livros.append(livro)
  
 arquivo.close()
- 
- 
 # Salva os livros no arquivo para manter os dados guardados
- 
 def salvar_arquivo():
     arquivo = open("livros.csv", "w", encoding="utf-8")
+
+    arquivo.write("titulo,autor,ano,isbn,status\n")
 
     for livro in livros:
         arquivo.write(
@@ -37,7 +33,6 @@ def salvar_arquivo():
         )
 
     arquivo.close()
- 
 # Cadastro de livros
  
 def cadastrar_livro():
@@ -46,8 +41,10 @@ def cadastrar_livro():
     autor = input("Autor: ")
     ano = input("Ano de publicação: ")
     isbn = input("Código/ISBN: ")
+    for livro in livros:
+        if livro["isbn"] == isbn:
+            return "Já existe um livro cadastrado com esse ISBN."
     status = "disponível"
- 
     livro = {
         "titulo": titulo,
         "autor": autor,
@@ -55,15 +52,11 @@ def cadastrar_livro():
         "isbn": isbn,
         "status": status
     }
- 
     livros.append(livro)
     salvar_arquivo()
- 
     return "Livro cadastrado"
- 
- 
+
 # Registro de empréstimo de livros
- 
 def emprestar_livro():
     isbn = input("Digite o ISBN: ")
     for livro in livros:
@@ -74,10 +67,8 @@ def emprestar_livro():
             salvar_arquivo()
             return "Empréstimo realizado"
     return "Livro não encontrado"
- 
- 
+
 # Registro de devolução de livros
- 
 def devolver_livro():
     isbn = input("Digite o ISBN: ")
     for livro in livros:
@@ -89,12 +80,9 @@ def devolver_livro():
             return "Devolução realizada"
     return "Livro não encontrado"
  
- 
 # Lista todos os livros cadastrados
- 
 def listar_livros(livros):
     print("listar livros")
- 
     for livro in livros:
         print("Título:", livro["titulo"])
         print("Autor:", livro["autor"])
@@ -104,12 +92,12 @@ def listar_livros(livros):
  
     return "Lista finalizada"
  
- 
 # Busca um livro pelo título ou pelo autor 
+## O lower deixa tudo em letras minúsculas para ajudar na comparação
 def buscar_livro(livros):
     print("buscar livro")
     termo = input("Digite o título ou autor: ")
- 
+    encontrado = False
     for livro in livros:
         if termo.lower() in livro["titulo"].lower() or termo.lower() in livro["autor"].lower():
             print("Título:", livro["titulo"])
@@ -117,11 +105,16 @@ def buscar_livro(livros):
             print("Ano:", livro["ano"])
             print("ISBN:", livro["isbn"])
             print("Status:", livro["status"])
- 
+            encontrado = True
+    if not encontrado:
+        print("Nenhum livro encontrado.")
+
     return "Busca finalizada"
  
 # Ordena a listagem de livros por título, autor ou ano de publicação
- 
+# O sort organiza os livros de acordo com a opção escolhida pelo usuario
+# O key mostra qual informação será usada para organizar
+# O lambda é uma opção mais rapida de pegar uma informação de cada livro
 def ordenar_livros(livros):
     print("1 - Ordenar por título")
     print("2 - Ordenar por autor")
@@ -132,16 +125,14 @@ def ordenar_livros(livros):
     elif opcao == "2":
         livros.sort(key=lambda livro: livro["autor"])
     elif opcao == "3":
-        livros.sort(key=lambda livro: livro["ano"])
+        livros.sort(key=lambda livro: int(livro["ano"]))
     else:
-        print("Opção inválida")
+        print("Opção inválida..")
         return livros
     salvar_arquivo()
     return livros
 
-
 # Menu principal que mantém o sistema funcionando
- 
 while True:
     print("\nSISTEMA DA BIBLIOTECA")
     print("1 - Cadastrar livros")
